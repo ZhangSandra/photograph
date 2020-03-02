@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+      button {
+        width: 25rem;
+        height: 5rem;
+        display: block;
+        margin: 220px auto;
+        font-size: 3rem;
+        border: 1px solid;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p id="demo"></p>
+    <button onclick="getLocation()">获取经纬度</button>
+    <br />
+
+    <input
+      type="file"
+      capture="camcorder"
+      accept="image/*"
+      id="filetestB"
+      name="filetest"
+    />
+
+    <input
+      type="file"
+      capture="camcorder"
+      accept="image/*"
+      id="filetest"
+      name="filetest"
+    />
+
+    <img src="" id="v_photoA" style="width:100%;" />
+    <img src="" id="v_photoB" style="width:100%;" />
+  </body>
+  <script>
+    // https://blog.csdn.net/Jioho_chen/article/details/83592630
+
+    var x = document.getElementById("demo");
+    var x2 = document.getElementById("hideval");
+    function getLocation() {
+      //检测是否支持地理定位 如果支持，则运行 getCurrentPosition() 方法。如果不支持，则向用户显示一段消息。
+      if (navigator.geolocation) {
+        //如果getCurrentPosition()运行成功， //则向参数showPosition中规定的函数返回一个coordinates对象
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        x.innerHTML = "地理位置浏览器支持";
+      }
+    }
+
+    function showPosition(position) {
+      //showPosition() 函数获得并显示经度和纬度
+      x.innerHTML =
+        "纬度: " +
+        position.coords.latitude +
+        "<br />经度: " +
+        position.coords.longitude;
+      x2.innerHTML =
+        +position.coords.latitude + "," + position.coords.longitude;
+    }
+
+    document.querySelector("#filetestB").onchange = function() {
+      alert(111);
+      var fileTag = document.getElementById("filetestB");
+      console.log();
+      var file = fileTag.files[0];
+
+      var fileReader = new FileReader();
+
+      fileReader.onloadend = function() {
+        if (fileReader.readyState == fileReader.DONE) {
+          document
+            .getElementById("v_photoA")
+            .setAttribute("src", fileReader.result);
+        }
+      };
+
+      fileReader.readAsDataURL(file);
+    };
+
+    document.querySelector("#filetest").onchange = function() {
+      alert(111);
+      var fileTag = document.getElementById("filetest");
+      console.log();
+      var file = fileTag.files[0];
+
+      var fileReader = new FileReader();
+
+      fileReader.onloadend = function() {
+        if (fileReader.readyState == fileReader.DONE) {
+          document
+            .getElementById("v_photoB")
+            .setAttribute("src", fileReader.result);
+        }
+      };
+
+      fileReader.readAsDataURL(file);
+    };
+  </script>
+</html>
